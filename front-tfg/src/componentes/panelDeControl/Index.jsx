@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import GetProducto from './GetProducto';
 
 const Index = () => {
+
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(json=>setProductos(json))
+  }, []);
+
   return (
     <div>
       <header className='flex justify-center flex-col'>
@@ -14,8 +24,9 @@ const Index = () => {
       </header>
 
       <body className='flex jusify-center flex-col h-screen'>
-        <p className='pb-10'>Elemento1</p>
-        <p>Elemento2</p>
+        {productos.map(item =>(
+          <GetProducto key={item.id} producto={item}/>
+        ))}
       </body>
       
     </div>
